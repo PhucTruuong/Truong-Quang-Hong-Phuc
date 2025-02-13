@@ -1,0 +1,59 @@
+type AircraftModel {
+  en: String!
+  ru: String!
+}
+
+input AircraftModelInput {
+  en: String!
+  ru: String!
+}
+
+type Aircraft {
+  aircraft_code: String!
+  model: AircraftModel!
+  range: Int!
+  manufacturer: String!
+}
+
+input AircraftInput {
+  aircraft_code: String!
+  model: AircraftModelInput!
+  range: Int!
+  manufacturer: String!
+}
+
+input UpdateAircraftInput {
+  aircraft_code: String!
+  model: AircraftModelInput
+  range: Int
+  manufacturer: String
+}
+
+type PaginationMeta {
+  page: Int!
+  limit: Int!
+  itemCount: Int!
+  pageCount: Int!
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+}
+
+type AircraftPagination {
+  data: [Aircraft]!
+  meta: PaginationMeta!
+}
+
+type Query {
+  selectAllAircrafts(limit: Int!, page: Int!, search: String, filter: String): AircraftPagination
+  selectAircraftById(id: String!): Aircraft
+}
+
+type DeleteMessage {
+  message: String!
+}
+
+type Mutation {
+  createAircraft(input: AircraftInput): Aircraft
+  updateAircraft(input: UpdateAircraftInput): Aircraft
+  deleteAircraft(id: String!): DeleteMessage
+}
